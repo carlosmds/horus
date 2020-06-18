@@ -15,7 +15,7 @@ export default function CreateRoom (props) {
         <Box p={4}>
             <Heading variant='display'>Olá!</Heading>
             <Text mb={4}>Horus é um app de vídeo conferênias instantâneas, basta criar uma nova sala de conferência e enviar o link para seus convidados!</Text>
-            <Button >
+            <Button mr={1}>
                 Abrir no GitHub<AiFillGithub />
             </Button>
             <Button onClick={create}>Criar nova sala</Button>
