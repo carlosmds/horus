@@ -1,44 +1,36 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import CreateRoom from "./routes/CreateRoom";
 import Room from "./routes/Room";
 import NavBar from "./components/NavBar";
 import { ThemeProvider } from 'theme-ui';
-import { tailwind, dark, deep, tosh } from '@theme-ui/presets'
+import { tosh } from '@theme-ui/presets';
 import storage from 'local-storage-fallback';
 
-const themeList = [ tailwind, dark, deep, tosh ];
-
-function getInitialTheme() {
-  const savedTheme = storage.getItem('theme');
-  
-  return savedTheme 
-    ? JSON.parse(savedTheme) 
-    : { themeIndex: 0 } ;
-}
+const homeLink = 'http://localhost:4000/';
 
 class App extends React.Component {
 
   constructor (props) {
     super(props);
-    this.themeHandler = this.themeHandler.bind(this);
-    this.state = { ...getInitialTheme() };
+    this.state = this.getInitialState();
   }
 
-  themeHandler() {
-    this.setState({ themeIndex: (this.state.themeIndex+1 === themeList.length) ? 0 : this.state.themeIndex + 1 });
+  getInitialState() {
+    return {
+      name: storage.getItem('userName') || 'Osíris'
+    }
   }
   
   render() {
 
-    storage.setItem('theme', JSON.stringify(this.state));
-
     return(
-      <ThemeProvider theme={themeList[this.state.themeIndex]}>
-        <NavBar themeHandler={this.themeHandler}/>
+      <ThemeProvider theme={tosh}>
+        {this.props.children}
+        <NavBar homeLink={homeLink}/>
         <BrowserRouter>
           <Switch>
-            <Route path="/" exact component={CreateRoom} />
+            <Route path="/" exact render={(props) => ( <CreateRoom {...props} name={this.state.name} /> )}/>
             <Route path="/room/:roomID" component={Room} />
           </Switch>
         </BrowserRouter>
