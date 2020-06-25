@@ -7,7 +7,7 @@ import { ThemeProvider } from 'theme-ui';
 import { tosh } from '@theme-ui/presets';
 import storage from 'local-storage-fallback';
 
-const homeLink = 'http://localhost:4000/';
+const homeLink = process.env.REACT_APP_URL;
 
 class App extends React.Component {
 
@@ -18,7 +18,7 @@ class App extends React.Component {
 
   getInitialState() {
     return {
-      name: storage.getItem('userName') || 'Osíris'
+      name: storage.getItem('userName') || ''
     }
   }
   
