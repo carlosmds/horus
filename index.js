@@ -3,9 +3,7 @@ const express = require('express');
 const logger = require('pino')();
 const app = express();
 
-const { parsed : env } = require('dotenv').config({ path: './client/.env' });
-
-if (env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
   const path = require('path');
   app.get('*', (req, res) => {
@@ -13,9 +11,9 @@ if (env.NODE_ENV === 'production') {
   });
 }
 
-const log = logger.child({ level: env.LOG_LEVEL || 'info', prettyPrint: true });
+const log = logger.child({ level: process.env.LOG_LEVEL || 'info', prettyPrint: true });
 
-const io = require("socket.io").listen(env.REACT_APP_SOCKET_PORT);
+const io = require("socket.io").listen(process.env.REACT_APP_SOCKET_PORT);
 
 const users = {};
 const socketToRoom = {};
@@ -69,10 +67,10 @@ io.on('connection', socket => {
 // const redis = require('redis');
 
 // const redisClient = redis.createClient({
-//     host: env.REDIS_HOST,
-//     port: env.REDIS_PORT,
+//     host: process.env.REDIS_HOST,
+//     port: process.env.REDIS_PORT,
 //     no_ready_check: true,
-//     auth_pass: env.REDIS_PASSWORD
+//     auth_pass: process.env.REDIS_PASSWORD
 // });
 
 // redisClient.on('connect', () => {   
