@@ -7,15 +7,7 @@ const { parsed : env } = require('dotenv').config();
 
 const log = logger.child({ level: env.LOG_LEVEL || 'info', prettyPrint: true });
 
-// const server = require('https').createServer({
-//     key: fs.readFileSync(env.SSL_KEY),
-//     cert: fs.readFileSync(env.SSL_CERTIFICATE),
-//     ca: fs.readFileSync(env.SSL_CA),
-// }, app);
-
-const server = require('http').createServer(app);// for localhost
-
-const io = require('socket.io')(server);
+const io = require('socket.io').listen(env.REACT_APP_SERVER_PORT);
 
 // const redisClient = redis.createClient({
 //     host: env.REDIS_HOST,
@@ -43,11 +35,7 @@ io.on('connection', socket => {
         ...socket.handshake.query
     };
 
-    // name, color, room, base64image ?
-
-    log.debug(user, 'User connected');
-    
-    // socket.emit('connected', user);
+    log.debug(JSON.stringify(user), 'User connected');
 
     socket.on("join room", roomID => {
       if (users[roomID]) {
@@ -84,13 +72,4 @@ io.on('connection', socket => {
           users[roomID] = room;
       }
     });
-});
-
-server.listen(env.PORT, () => {
-    log.info('Server running on port %d', env.PORT);
-});
-
-process.on('SIGINT', function() {
-    log.info( "Gracefully shutting down from SIGINT (Ctrl-C)" );
-    process.exit(1);
 });
