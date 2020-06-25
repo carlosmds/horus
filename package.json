@@ -20,11 +20,12 @@
     "socket.io": "^2.3.0"
   },
   "scripts": {
-    "dev": "react-scripts start",
-    "start": "serve -s build",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
+    "dev": "run-p server start",
+    "server": "node index.js",
+    "start": "serve -s client/build",
+    "build": "npm run build --prefix=client",
+    "test": "npm run test --prefix=client",
+    "eject": "npm run eject --prefix=client",
     "heroku-postbuild": "npm run build"
   },
   "engines": {
