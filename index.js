@@ -7,7 +7,7 @@ const micro = require('micro');
 
 const { parsed : env } = require('dotenv').config();
 
-const app = require((process.env.NODE_ENV === "production") ? './build' : './src');
+const app = require((env.NODE_ENV === "production") ? './build' : './src');
 
 const log = logger.child({ level: env.LOG_LEVEL || 'info', prettyPrint: true });
 
