@@ -1,39 +1,23 @@
+ 
+const express = require('express');
 const logger = require('pino')();
-const redis = require('redis');
-const fs = require('fs');
+const app = express();
 
-const config = require('config');
-const micro = require('micro');
+const { parsed : env } = require('dotenv').config({ path: './client/.env' });
 
-const { parsed : env } = require('dotenv').config();
-
-const app = require((env.NODE_ENV === "production") ? './build' : './src');
+if (env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
+  const path = require('path');
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
 
 const log = logger.child({ level: env.LOG_LEVEL || 'info', prettyPrint: true });
 
-logger.debug(config, 'configuration:');
-const port = config.get('port');
-
-const server = micro(app);
-const io = require('socket.io')(server);
-
-// const redisClient = redis.createClient({
-//     host: env.REDIS_HOST,
-//     port: env.REDIS_PORT,
-//     no_ready_check: true,
-//     auth_pass: env.REDIS_PASSWORD
-// });
-
-// redisClient.on('connect', () => {   
-//     log.info("Redis connected");
-// }); 
-
-// redisClient.on('error', (err) => {
-//     log.error("Error " + err)
-// });
+const io = require("socket.io").listen(env.REACT_APP_SOCKET_PORT);
 
 const users = {};
-
 const socketToRoom = {};
 
 io.on('connection', socket => {
@@ -82,4 +66,19 @@ io.on('connection', socket => {
     });
 });
 
-server.listen(port);
+// const redis = require('redis');
+
+// const redisClient = redis.createClient({
+//     host: env.REDIS_HOST,
+//     port: env.REDIS_PORT,
+//     no_ready_check: true,
+//     auth_pass: env.REDIS_PASSWORD
+// });
+
+// redisClient.on('connect', () => {   
+//     log.info("Redis connected");
+// }); 
+
+// redisClient.on('error', (err) => {
+//     log.error("Error " + err)
+// });
