@@ -1,13 +1,21 @@
-const app = require('express')();
 const logger = require('pino')();
 const redis = require('redis');
 const fs = require('fs');
 
+const config = require('config');
+const micro = require('micro');
+
 const { parsed : env } = require('dotenv').config();
+
+const app = require((process.env.NODE_ENV === "production") ? './build' : './src');
 
 const log = logger.child({ level: env.LOG_LEVEL || 'info', prettyPrint: true });
 
-const io = require('socket.io').listen(env.REACT_APP_SERVER_PORT);
+logger.debug(config, 'configuration:');
+const port = config.get('port');
+
+const server = micro(app);
+const io = require('socket.io')(server);
 
 // const redisClient = redis.createClient({
 //     host: env.REDIS_HOST,
@@ -73,3 +81,5 @@ io.on('connection', socket => {
       }
     });
 });
+
+server.listen(port);
