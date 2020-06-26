@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { v1 as uuid } from "uuid";
-import { Box, Heading, Flex, Card, Link } from 'rebass';
-import { Input } from '@rebass/forms';
+import { Box, Heading, Flex, Card, Link, Text } from 'rebass';
+import { Input, Label } from '@rebass/forms';
 import { FaPencilAlt } from 'react-icons/fa';
 import { RiShareBoxLine } from 'react-icons/ri';
 import storage from 'local-storage-fallback';
@@ -18,6 +18,7 @@ export default function CreateRoom (props) {
 
     const cardStyles = {
         p: 2,
+        my: 3,
         boxShadow: '0 0 4px rgba(145, 145, 145, .500)',
         borderRadius: '10px',
     };
@@ -26,15 +27,20 @@ export default function CreateRoom (props) {
 
     const [name, setName] = useState(props.name); 
     
-    var nameInput;
+    var nameInput, roomName, roomLink;
 
     useEffect(() => {
         storage.setItem('userName', name);
     });
 
     const create = () => {
-        const id = uuid();
-        props.history.push(`/room/${id}`);
+        const createRoomName = roomName.value || uuid();
+        props.history.push(`/room/${createRoomName}`);
+    }   
+
+    const join = (e) => {
+        const joinRoomLink = roomLink.value.split('/room/')[1];
+        props.history.push(`/room/${joinRoomLink}`);
     }   
 
     return (
@@ -50,27 +56,36 @@ export default function CreateRoom (props) {
 
             <Flex p={4}>
                 <Box width={1/4}></Box>
-                <Card width={1/2} sx={cardStyles} p={4}>
-                    <Heading>Horus é um app de vídeo conferências instantâneas.</Heading>
-                    <Heading>Para utilizar é simples, basta criar uma nova sala e enviar o link para seus convidados!</Heading>
-                </Card>
+                
                 <Box width={1/4}></Box>
             </Flex>
 
             <Flex>
-                <Box width={1/2} p={3}>
-                    <Card sx={cardStyles}>
-                        <Link onClick={create}> <RiShareBoxLine /></Link>
-                        <Heading>Criar nova sala</Heading>
+                <Box width={1/6}/>
+                <Box width={1/3} p={3}>
+                    <Card sx={cardStyles} textAlign='left' p={4}>
+                        <Heading fontSize={5} mb={4}>Horus é um app de vídeo conferências instantâneas.</Heading>
+                        <Text fontSize={3}>Para utilizar é simples, basta criar uma nova sala e enviar o link para seus convidados!</Text>
                     </Card>
                 </Box>
-
-                <Box width={1/2} p={3}>
+                <Box width={1/3} p={3}>
                     <Card sx={cardStyles}>
-                    <Link> <RiShareBoxLine /></Link>
-                        <Heading>Entrar em sala já existente</Heading>
+                        <Label htmlFor='roomName' p={4}>
+                            <Heading>Nome da sala: </Heading>
+                            <Input name='roomName' display='inline' sx={inputStyles} width={3/5} defaultValue={name} placeholder='deixe vazio para um nome aleatório' ref={(input) => { roomName = input; }}/>
+                        </Label>
+                        <Link href='#' sx={linkStyles} onClick={create}> <Heading>Criar nova sala <RiShareBoxLine /></Heading> </Link>
+                    </Card>
+                    <Card sx={cardStyles}>
+                        <Label htmlFor='roomLink' p={4}>
+                            <Heading>Link: </Heading>
+                            <Input name='roomLink' display='inline' sx={inputStyles} width={4/5} defaultValue={name} placeholder='insira o link para a sala' ref={(input) => { roomLink = input; }}/>
+                        </Label>
+                        <Link href='#' sx={linkStyles} onClick={join}> <Heading>Entrar com link <RiShareBoxLine /></Heading> </Link>
+                        
                     </Card>
                 </Box>
+                <Box width={1/6}/>
             </Flex>
         </Box>
     );
