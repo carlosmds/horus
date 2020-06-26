@@ -51,7 +51,7 @@ export default function CreateRoom (props) {
             <Flex p={4}>
                 <Box width={1/4}></Box>
                 <Card width={1/2} sx={cardStyles} p={4}>
-                    <Heading>Horus é um app de vídeo conferênias instantâneas.</Heading>
+                    <Heading>Horus é um app de vídeo conferências instantâneas.</Heading>
                     <Heading>Para utilizar é simples, basta criar uma nova sala e enviar o link para seus convidados!</Heading>
                 </Card>
                 <Box width={1/4}></Box>
