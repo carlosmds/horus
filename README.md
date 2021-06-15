@@ -1,7 +1,7 @@
-hospedado com AWS amplify em: https://master.d3fmmysd9gnv8s.amplifyapp.com/
+hospedado com AWS Amplify (us-east-1) em: https://master.d3fmmysd9gnv8s.amplifyapp.com/
 
 hospedado com Vercel em: https://horus.carlosmds.vercel.app/
 
-api https://github.com/carlosmds/horus-party
+Repositório da API https://github.com/carlosmds/horus-party
 
-este é um projeto em construção, destinado principalmente, para o aprendizado em Nodejs, TypeScript e React.
+Este é um projeto em construção, destinado principalmente ao aprendizado em Nodejs, TypeScript e React.
