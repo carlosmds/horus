@@ -47,7 +47,7 @@ export default function CreateRoom (props) {
         <Box p={4} textAlign='center'>
             
             <Heading> Olá,
-                <Input name='name' display='inline' sx={inputStyles} width={1/8} defaultValue={name} placeholder='seu nome, queridx' 
+                <Input name='name' display='inline' sx={inputStyles} width={1/8} defaultValue={name} placeholder='pessoa' 
                     onChange={ e => setName(e.target.value) }
                     ref={(input) => { nameInput = input; }}
                 />
