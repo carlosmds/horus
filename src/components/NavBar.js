@@ -19,7 +19,7 @@ export default function NavBar (props) {
             </Box>
             <Box width={1/3}>
                 <Text sx={{ p:2, ...textProps}}> 
-                    <RainbowText lightness={0.5} saturation={1}> Feito com amor no Brasil </RainbowText><> </><GiBrazil />
+                    <RainbowText lightness={0.5} saturation={1}> Feito com Amor no Brasil </RainbowText><> </><GiBrazil />
                 </Text>
             </Box>
             <Box mx='auto' />
