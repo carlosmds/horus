@@ -44,7 +44,7 @@ export default function WelcomeRoom (props) {
         <Box p={4} textAlign='center'>
             
             <Heading> Olá,
-                <Input name='name' display='inline' sx={inputStyles} width={[1/3, 1/4, 1/8]} defaultValue={name} placeholder='Pessoa' 
+                <Input textAlign='center' name='name' display='inline' sx={inputStyles} width={[1/2, 2/6, 2/8, 1/5]} defaultValue={name} placeholder='Pessoa' 
                     onChange={ e => setName(e.target.value) }
                     ref={(input) => { nameInput = input; }}
                 />
@@ -55,7 +55,7 @@ export default function WelcomeRoom (props) {
             <Flex>
                 <Box width={[0, 1/7, 2/8, 3/12]}/>
 
-                <Box width={[1, 5/6, 4/8, 6/12]} p={3}>
+                <Box width={[1, 5/6, 4/8, 6/12]} p={1}>
 
                     <Card sx={cardStyles} p={4}>
                         <Heading fontSize={5} mb={4}>Faça videochamadas instantâneas</Heading>
@@ -66,8 +66,8 @@ export default function WelcomeRoom (props) {
                     
                     <Card sx={cardStyles} p={4}>
                         <Heading>Nome da sala: </Heading>
-                        <Label htmlFor='roomName' p={3}>
-                            <Input name='roomName' sx={inputStyles} placeholder='Vazio para nome automatico' ref={(input) => { roomName = input; }}/>
+                        <Label htmlFor='roomName' p={0}>
+                            <Input textAlign='center' name='roomName' sx={inputStyles} placeholder='se vazio, será gerado automaticamente' ref={(input) => { roomName = input; }}/>
                         </Label>
                         <Link href='#' sx={linkStyles} onClick={join}> <Heading>Entrar <RiShareBoxLine /></Heading> </Link>
                     </Card>
