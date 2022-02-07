@@ -44,7 +44,7 @@ export default function WelcomeRoom (props) {
         <Box p={4} textAlign='center'>
             
             <Heading> Olá,
-                <Input textAlign='center' name='name' display='inline' sx={inputStyles} width={[1/2, 2/6, 2/8, 1/5]} defaultValue={name} placeholder='Pessoa' 
+                <Input textAlign='center' name='name' display='inline' sx={inputStyles} width={[1/2, 2/6, 2/8, 1/5]} defaultValue={name} placeholder='pessoa' 
                     onChange={ e => setName(e.target.value) }
                     ref={(input) => { nameInput = input; }}
                 />
@@ -58,18 +58,31 @@ export default function WelcomeRoom (props) {
                 <Box width={[1, 5/6, 4/8, 6/12]} p={1}>
 
                     <Card sx={cardStyles} p={4}>
-                        <Heading fontSize={5} mb={4}>Faça videochamadas instantâneas</Heading>
+                        
+                        <Heading fontSize={5} mb={4}>
+                            <RainbowText p={2} fontWeight={"bold"}> Faça videochamadas instantâneas</RainbowText>
+                        </Heading>
+                        
                         <Text fontWeight={"bold"}>
-                            <RainbowText p={2} fontWeight={"bold"}>Crie uma nova sala de reunião ou insira o nome da sala para entrar.</RainbowText>
+                            Crie uma nova sala de reunião ou preencha abaixo o nome da sala para entrar.
                         </Text>
                     </Card>
                     
                     <Card sx={cardStyles} p={4}>
-                        <Heading>Nome da sala: </Heading>
+                        
+                        <Heading>
+                            Nome da sala de reunião: 
+                        </Heading>
+                        
                         <Label htmlFor='roomName' p={0}>
                             <Input textAlign='center' name='roomName' sx={inputStyles} placeholder='se vazio, será gerado automaticamente' ref={(input) => { roomName = input; }}/>
                         </Label>
-                        <Link href='#' sx={linkStyles} onClick={join}> <Heading>Entrar <RiShareBoxLine /></Heading> </Link>
+                        
+                        <Link href='#' sx={linkStyles} onClick={join}> 
+                            <Heading>
+                                Entrar <RiShareBoxLine />
+                            </Heading>
+                        </Link>
                     </Card>
                 
                 </Box>
