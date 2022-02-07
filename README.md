@@ -1,6 +1,6 @@
-hospedado com AWS Amplify (us-east-1) em: https://master.d3fmmysd9gnv8s.amplifyapp.com/
+# horus 
 
-hospedado com Vercel em: https://horus.carlosmds.vercel.app/
+Hospedado com Vercel em: https://horusweb.vercel.app/
 
 Repositório da API https://github.com/carlosmds/horus-party
 
