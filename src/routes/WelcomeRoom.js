@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { v1 as uuid } from "uuid";
-import { Box, Heading, Flex, Card, Link, Text } from 'rebass';
+import { Box, Heading, Flex, Card, Link, Text, Button } from 'rebass';
 import { Input, Label } from '@rebass/forms';
 import { FaPencilAlt } from 'react-icons/fa';
-import { RiShareBoxLine } from 'react-icons/ri';
+import io from "socket.io-client";
 import storage from 'local-storage-fallback';
 import RainbowText from 'react-rainbow-text';
 
@@ -27,12 +27,19 @@ export default function WelcomeRoom (props) {
 
     const linkStyles = { display: 'inline-block', fontWeight: 'bold', px: 2, py: 1, color: 'inherit', mt:1, p:2, pt:2, pb:1 };
 
+    const buttonStyles = { display: 'inline-block', fontWeight: 'bold', color: 'white', backgroundColor: 'black', cursor: 'pointer', border: '1px solid white', px: 2, py: 1, mt:1, p:2, pt:2, pb:1 };
+
     const [name, setName] = useState(props.name); 
+    const [roomCount, setRoomCount] = useState(props.roomCount); 
     
     var nameInput, roomName;
 
+    const socketRef = useRef();
+    socketRef.current = io.connect(process.env.REACT_APP_SERVER_URL);
+    
     useEffect(() => {
         storage.setItem('userName', name);
+
     });
 
     const join = () => {
@@ -44,18 +51,18 @@ export default function WelcomeRoom (props) {
         <Box p={4} textAlign='center'>
             
             <Heading> Olá,
-                <Input textAlign='center' name='name' display='inline' sx={inputStyles} width={[1/2, 2/6, 2/8, 1/5]} defaultValue={name} placeholder='pessoa' 
+                <Input textAlign='center' name='name' display='inline' sx={inputStyles} width={[1/2, 2/6, 2/10, 1/5]} defaultValue={name} placeholder='pessoa' 
                     onChange={ e => setName(e.target.value) }
                     ref={(input) => { nameInput = input; }}
                 />
                 <Link sx={linkStyles} href='#'><FaPencilAlt onClick={ e => nameInput.focus()}/></Link> 
             </Heading>
-
+            <Box height={[10, 25, 35, 50]}/>
 
             <Flex>
-                <Box width={[0, 1/7, 2/8, 3/12]}/>
+                <Box width={[0, 1/7, 2/10, 3/12]}/>
 
-                <Box width={[1, 5/6, 4/8, 6/12]} p={1}>
+                <Box width={[1, 5/6, 6/10, 6/12]} p={1}>
 
                     <Card sx={cardStyles} p={4}>
                         
@@ -64,32 +71,42 @@ export default function WelcomeRoom (props) {
                         </Heading>
                         
                         <Text fontWeight={"bold"}>
-                            Crie uma nova sala de reunião ou preencha abaixo o nome da sala para entrar.
+                            Horus é uma ferramenta de código aberto.<br></br>
+                            Sinta-se livre para contribuir e sugerir melhorias.
                         </Text>
                     </Card>
                     
                     <Card sx={cardStyles} p={4}>
                         
                         <Heading>
-                            Nome da sala de reunião: 
+                            Crie uma nova sala de reunião<br></br>
+                            Ou entre pelo código
                         </Heading>
                         
                         <Label htmlFor='roomName' p={0}>
-                            <Input textAlign='center' name='roomName' sx={inputStyles} placeholder='se vazio, será gerado automaticamente' ref={(input) => { roomName = input; }}/>
+                            <Input textAlign='center' name='roomName' sx={inputStyles} placeholder='código da sala. vazio para gerar um código aleatório' ref={(input) => { roomName = input; }}/>
                         </Label>
                         
-                        <Link href='#' sx={linkStyles} onClick={join}> 
+                        <br></br>
+                        <Button sx={buttonStyles} onClick={join}>
+                            
                             <Heading>
-                                Entrar <RiShareBoxLine />
+                                Entrar
                             </Heading>
-                        </Link>
+                            
+                        </Button>
                     </Card>
-                
                 </Box>
                 
-                <Box width={[0, 1/7, 2/8, 3/12]}/>
+                <Box width={[0, 1/7, 2/10, 3/12]}></Box>
                 
             </Flex>
+            <Box height={[10, 25, 35, 50]}> 
+                <Heading>
+                    Usuários ativos: {roomCount ?? 0}
+                </Heading>
+            </Box>
+
         </Box>
     );
 }

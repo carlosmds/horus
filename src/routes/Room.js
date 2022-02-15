@@ -52,12 +52,12 @@ const Room = (props) => {
             socketRef.current.emit("join room", roomID);
             socketRef.current.on("all users", users => {
                 const peers = [];
-                users.forEach(userID => {
-                    const peer = createPeer(userID, socketRef.current.id, stream);
+                users.forEach(user => {
+                    const peer = createPeer(user.id, socketRef.current.id, stream);
                     console.log(peer);
                     
                     peersRef.current.push({
-                        peerID: userID,
+                        peerID: user.id,
                         peer,
                     })
                     peers.push(peer);

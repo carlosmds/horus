@@ -34,7 +34,7 @@ export default function NavBar (props) {
             <Flex px={2} alignItems='center'>
                 <Box width={1}>
                     <Text sx={{ p:2, ...textProps}}> 
-                        <RainbowText lightness={0.5} saturation={1}> Feito com Amor no Brasil </RainbowText><> </><GiBrazil />
+                        <RainbowText lightness={0.5} saturation={1}> Pátria Amada Brasil </RainbowText><> </><GiBrazil />
                     </Text>
                 </Box>
             </Flex>
