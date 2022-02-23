@@ -103,7 +103,7 @@ export default function WelcomeRoom (props) {
             </Flex>
             <Box height={[10, 25, 35, 50]}> 
                 <Heading>
-                    Usuários ativos: {roomCount ?? 0}
+                     {/* Usuários ativos: {roomCount ?? 0} */}
                 </Heading>
             </Box>
 
